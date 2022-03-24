@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Jadiction - xat.me</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<meta name="description" content="Jadiction's xat.me" />
+		<meta name="author" content="Jadiction" />
+		<link rel="shortcut icon" href="./images/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="./style.css" />
+		<link rel="stylesheet" type="text/css" href="./all.min.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="slideshow">
+			<slide></slide>
+			<slide></slide>
+			<slide></slide>
+			<slide></slide>
+			<slide></slide>
+			<slide></slide>
+			<slide></slide>
+		</div>
+		<div class="card" data-state="#me">
+			<div class="card-header">
+				<div class="card-cover"></div>
+				<img class="card-avatar" src="./images/avatar.png" alt="avatar" />
+				<div class="card-avatar-verified zoom tooltip"><span class="tooltiptext">Verified</span><i class="fa-solid fa-check" style="position: absolute; margin: 2px auto auto -6px;"></i></div>
+				<h1 class="card-fullname">Jadiction (42120532)</h1>
+				<h2 class="card-cardtitle"><img src="./images/fex.png" style="width:30px; margin: -11px -9px 0px 0px; vertical-align: middle;" /> FEXBots Developer</h2>
+			</div>
+			<div class="card-main">
+				<div class="card-section is-active" id="me">
+					<div class="card-content background">
+						<p class="card-desc"><img style="vertical-align: middle;" src="./images/rick.gif" />COUNTER: <div style="float: left; bottom:0;" id="counter">0</div></p>
+					</div>
+					<div class="card-social">
+						<a class="zoom tooltip" id="social-discord" href="https://discord.gg/EyQwyN4" target="_blank"><span class="tooltiptext">FEXBots Discord Server</span><i class="fa-brands fa-discord"></i></a>
+						<a class="zoom tooltip" id="social-github" href="https://github.com/Jadiction" target="_blank"><span class="tooltiptext">Github</span><i class="fa-brands fa-github"></i></a>
+						<a class="zoom tooltip" id="social-twitter" href="https://twitter.com/Jadiction" target="_blank"><span class="tooltiptext">Twitter</span><i class="fa-brands fa-twitter"></i></a>
+						<a class="zoom tooltip" id="social-youtube" href="https://youtube.com/c/Jadiction" target="_blank"><span class="tooltiptext">YouTube</span><i class="fa-brands fa-youtube"></i></a>
+						<a class="zoom tooltip" id="social-instagram" href="https://instagram.com/Jadictions" target="_blank"><span class="tooltiptext">Instagram</span><i class="fa-brands fa-instagram"></i></a>
+					</div>
+				</div>
+				<div class="card-section" id="cutiesTab">
+					<div class="card-content">
+						<div class="card-subtitle">Absolute cuties</div>
+						<div class="card-subtitle" style="margin: -16px 0px 0px 0px; font-size: 12px;">Shuffled because they're all equal <3</div>
+							<div id="cuties">Loading...</div>
+					</div>
+				</div>
+				<div class="card-buttons">
+					<button data-section="#me" class="is-active"><i data-section="#me" style="cursor: pointer;" class="fa-solid fa-user"></i> ME</button>
+					<button data-section="#cutiesTab"><i data-section="#cutiesTab" style="cursor: pointer;" class="fa-solid fa-user-group"></i> CUTIES</button>
+				</div>
+			</div>
+		</div>
+		<div id="cincopa_ab38b2">...</div><script type="text/javascript">
+			var cpo = []; cpo["_object"] ="cincopa_ab38b2"; cpo["_fid"] = "AAOA26epjY2c";
+			var _cpmp = _cpmp || []; _cpmp.push(cpo);
+			(function() { var cp = document.createElement("script"); cp.type = "text/javascript";
+			cp.async = true; cp.src = "https://rtcdn.cincopa.com/libasync.js";
+			var c = document.getElementsByTagName("script")[0];
+			c.parentNode.insertBefore(cp, c); })(); </script>
+	</body>
+	<script>
+		const cutiesArr = [
+		['FEXBot','FEXBot','🤖'], ['Ioana','Ioana'], ['Mob','Mobs','🍆'], ['Austin','Austin','🍊'], ['Rae','Piggychops','❤️'], ['Nathy','Nathy','🌺'], ['Leia','Leia',''], ['Krissi','Cutey','🐱'], ['Vanessa','Jungkook','🍌'], ['Izzy','Vegito','🐪'], ['Alex','Soar','😵'], ['Wyn','Someone'], ['Emmy','Emma'], ['Kristy','Lily'],['Kelly','Sins','😴'], ['Lauren','Stunner','🤍'], ['Lemona','Lemona','🎀'], ['Kyle','Kyle','🚲'], ['Bonnie','Loba','🐇'], ['Karl','Umbreon'], ['Tek','Vamp','🦔']
+		];
+		const buttons = document.querySelectorAll(".card-buttons button");
+		const sections = document.querySelectorAll(".card-section");
+		const card = document.querySelector(".card");
+		const handleButtonClick = e => {
+			const targetSection = e.target.getAttribute("data-section");
+			const section = document.querySelector(targetSection);
+			targetSection !== "#me" ? card.classList.add("is-active") : card.classList.remove("is-active");
+			card.setAttribute("data-state", targetSection);
+			sections.forEach(s => s.classList.remove("is-active"));
+			buttons.forEach(b => b.classList.remove("is-active"));
+			e.target.classList.add("is-active");
+			section.classList.add("is-active");
+		};
+		buttons.forEach(btn => {
+			btn.addEventListener("click", handleButtonClick);
+		});
+
+		function shuffle(array) {
+			let currentIndex = array.length,  randomIndex;
+			while(currentIndex != 0) {
+				randomIndex = Math.floor(Math.random() * currentIndex);
+				currentIndex--;
+				[array[currentIndex], array[randomIndex]] = [
+					array[randomIndex], array[currentIndex]];
+			}
+			return array;
+		}
+		function cuties() {
+			shuffle(cutiesArr);
+			cutiesArr.unshift(['Vee','Brat','💙']);
+			var content = '';
+			cutiesArr.forEach(function(el, index) {
+				content += '<a href="https://xat.me/'+el[1]+'" target="_blank"><div style="margin:-4px 0px -9px 0px;">'+((el[2])?el[2]:'❤')+'</div>'+el[0]+'</a>';
+			})
+			cutiesArr.shift(['Vee','Brat','💙']);
+			document.getElementById("cuties").innerHTML = content;
+		//	setTimeout(cuties, 10000);
+		}
+		cuties();
+
+
+		$(document).ready(function() {
+	    $(window).bind("beforeunload", function() {
+				console.log('LEAVE');
+	        $.ajax({
+	          type: "POST",
+	          async: false,
+	          cache: false,
+	          url: "https://fexbots.com/jadprofilecounterlive",
+	          data: {'action' : 'leave'},
+	          success: function(result) { }
+					});
+	    });
+		});
+
+		function liveCounter() {
+			var data = {'action' : 'enter'};
+			$.post('https://fexbots.com/jadprofilecounterlive',data,function(res) {
+					console.log('RESPONSE: '+res);
+					$('#counter').html(res);
+			});
+			setTimeout(liveCounter, 10000);
+		}
+		liveCounter();
+	</script>
+</html>
