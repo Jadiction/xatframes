@@ -112,7 +112,6 @@
 
 		$(document).ready(function() {
 	    $.getJSON("https://fexbots.com/jadprofilecounter", function(res) {
-	      console.log(res);
 	      $("#live_counter").html(res.live);
 				$("#unique_counter").html(res.unique);
 				$("#total_counter").html(res.total);
