@@ -32,7 +32,7 @@
 			<div class="card-main">
 				<div class="card-section is-active" id="me">
 					<div class="card-content background">
-						<p class="card-desc"><img style="vertical-align: middle;" src="./images/rick.gif" />COUNTER: <div style="float: left; bottom:0;" id="counter">0</div></p>
+						<p class="card-desc"><img style="vertical-align: middle;" src="./images/rick.gif" /></p>
 					</div>
 					<div class="card-social">
 						<a class="zoom tooltip" id="social-discord" href="https://discord.gg/EyQwyN4" target="_blank"><span class="tooltiptext">FEXBots Discord Server</span><i class="fa-brands fa-discord"></i></a>
@@ -46,7 +46,7 @@
 					<div class="card-content">
 						<div class="card-subtitle">Absolute cuties</div>
 						<div class="card-subtitle" style="margin: -16px 0px 0px 0px; font-size: 12px;">Shuffled because they're all equal <3</div>
-							<div id="cuties">Loading...</div>
+							<div id="cuties"><i class="fa-solid fa-spinner"></i>Loading...</div>
 					</div>
 				</div>
 				<div class="card-buttons">
@@ -55,6 +55,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="background" style="position: fixed; z-index: 1; float: left; bottom: 0; margin: 5px; border-radius: 3px; color: #FFF;"><div class="background" style="background-color: rgba(114, 114, 114, 0.50); text-align: center; font-weight: bold; font-size: 16px; margin: 0px 0px 10px 0px; padding: 10px 20px 10px 20px;">Profile Views</div>Live views: <span id="live_counter"><i class="fa-solid fa-spinner"></i></span><br>Unique views: <span id="unique_counter"><i class="fa-solid fa-spinner"></i></span><br>Total views: <span id="total_counter"><i class="fa-solid fa-spinner"></i></span></div>
 		<div id="cincopa_ab38b2">...</div><script type="text/javascript">
 			var cpo = []; cpo["_object"] ="cincopa_ab38b2"; cpo["_fid"] = "AAOA26epjY2c";
 			var _cpmp = _cpmp || []; _cpmp.push(cpo);
@@ -65,7 +66,7 @@
 	</body>
 	<script>
 		const cutiesArr = [
-		['FEXBot','FEXBot','🤖'], ['Ioana','Ioana'], ['Mob','Mobs','🍆'], ['Austin','Austin','🍊'], ['Rae','Piggychops','❤️'], ['Nathy','Nathy','🌺'], ['Leia','Leia',''], ['Krissi','Cutey','🐱'], ['Vanessa','Jungkook','🍌'], ['Izzy','Vegito','🐪'], ['Alex','Soar','😵'], ['Wyn','Someone'], ['Emmy','Emma'], ['Kristy','Lily'],['Kelly','Sins','😴'], ['Lauren','Stunner','🤍'], ['Lemona','Lemona','🎀'], ['Kyle','Kyle','🚲'], ['Bonnie','Loba','🐇'], ['Karl','Umbreon'], ['Tek','Vamp','🦔']
+		['FEXBot','FEXBot','🤖'], ['Ioana','Ioana','🦦'], ['Mob','Mobs','🍆'], ['Austin','Austin','🍊'], ['Rae','Piggychops','❤️'], ['Nathy','Nathy','🌺'], ['Leia','Leia',''], ['Krissi','Cutey','🐱'], ['Vanessa','Jungkook','🍌'], ['Izzy','Vegito','🐪'], ['Alex','Soar','😵'], ['Wyn','Someone'], ['Emmy','Emma','🙂'], ['Kristy','Lily'],['Kelly','Sins','😴'], ['Lauren','Stunner','🤍'], ['Lemona','Lemona','🎀'], ['Kyle','Kyle','🚲'], ['Bonnie','Loba','🐇'], ['Karl','Umbreon'], ['Tek','Vamp','🦔']
 		];
 		const buttons = document.querySelectorAll(".card-buttons button");
 		const sections = document.querySelectorAll(".card-section");
@@ -109,8 +110,13 @@
 
 
 		$(document).ready(function() {
+	    $.getJSON("https://fexbots.com/jadprofilecounter", function(res) {
+	      console.log(res);
+	      $("#live_counter").html(res.live);
+				$("#unique_counter").html(res.unique);
+				$("#total_counter").html(res.total);
+	    });
 	    $(window).bind("beforeunload", function() {
-				console.log('LEAVE');
 	        $.ajax({
 	          type: "POST",
 	          async: false,
@@ -122,14 +128,13 @@
 	    });
 		});
 
-		function liveCounter() {
+		function live_counter() {
 			var data = {'action' : 'enter'};
 			$.post('https://fexbots.com/jadprofilecounterlive',data,function(res) {
-					console.log('RESPONSE: '+res);
-					$('#counter').html(res);
+					$('#live_counter').html(res);
 			});
-			setTimeout(liveCounter, 10000);
+			setTimeout(live_counter, 10000);
 		}
-		liveCounter();
+		live_counter();
 	</script>
 </html>
