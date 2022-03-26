@@ -71,8 +71,10 @@ body {
 .card {
   z-index: 1;
   position: relative;
+  width: 59%;
+  min-width: 400px;
   max-width: 490px;
-  margin: 60px auto auto auto;
+  margin: 70px auto auto auto;
   overflow-y: auto;
   overflow-x: hidden;
   background-color: rgba(114, 114, 114, 0.24);
@@ -431,6 +433,8 @@ body {
 }
 .profile-stats {
   z-index: 1;
+  width: 13%;
+  min-width: 92px;
   position: fixed;
   float: left;
   padding: 4px;
@@ -448,5 +452,15 @@ body {
   font-size: 16px;
   margin: 0px 0px 10px 0px;
   padding: 10px 20px 10px 20px;
-  
+}
+
+@media (max-width: 1230px) {
+  #cincopa_ab38b2 {
+    display: none;
+  }
+}
+@media (max-width: 652px) {
+  .profile-stats {
+    display: none;
+  }
 }
