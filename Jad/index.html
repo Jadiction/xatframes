@@ -99,7 +99,7 @@
 			cutiesArr.unshift(['Vee','Brat','💙']);
 			var content = '';
 			cutiesArr.forEach(function(el, index) {
-				content += '<a href="https://xat.me/'+el[1]+'" target="_blank"><div style="margin:-4px 0px -9px 0px;">'+((el[2])?el[2]:'❤')+'</div>'+el[0]+'</a>';
+				content += '<a href="https://xat.me/'+el[1]+'" target="_blank"><div>'+((el[2])?el[2]:'❤')+'</div>'+el[0]+'</a>';
 			})
 			cutiesArr.shift(['Vee','Brat','💙']);
 			document.getElementById("cuties").innerHTML = content;
