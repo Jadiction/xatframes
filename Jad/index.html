@@ -24,15 +24,15 @@
 		<div class="card" data-state="#me">
 			<div class="card-header">
 				<div class="card-cover"></div>
-				<img class="card-avatar" src="./images/avatar.png" alt="avatar" />
+				<img draggable="false" class="card-avatar" src="./images/avatar.png" alt="avatar" />
 				<div class="card-avatar-verified zoom tooltip"><span class="tooltiptext">Verified</span><i class="fa-solid fa-check" style="position: absolute; margin: 2px auto auto -6px;"></i></div>
 				<h1 class="card-fullname">Jadiction (42120532)</h1>
-				<h2 class="card-cardtitle"><img src="./images/fex.png" style="width:30px; margin: -11px -9px 0px 0px; vertical-align: middle;" /> FEXBots Developer</h2>
+				<h2 class="card-cardtitle"><img draggable="false" src="./images/fex.png" style="width:30px; margin: -11px -9px 0px 0px; vertical-align: middle;" /> FEXBots Developer</h2>
 			</div>
 			<div class="card-main">
 				<div class="card-section is-active" id="me">
 					<div class="card-content background">
-						<p class="card-desc"><img style="vertical-align: middle;" src="./images/rick.gif" /></p>
+						<p class="card-desc"><img draggable="false" style="vertical-align: middle;" src="./images/rick.gif" /><img draggable="false" style="vertical-align: middle; width:153px; height:150px; margin-bottom: 13px; margin-right: 17px;" src="./images/morty.gif" /></p>
 					</div>
 					<div class="card-social">
 						<a class="zoom tooltip" id="social-discord" href="https://discord.gg/EyQwyN4" target="_blank"><span class="tooltiptext">FEXBots Discord Server</span><i class="fa-brands fa-discord"></i></a>
@@ -56,16 +56,15 @@
 			</div>
 		</div>
 		<div class="profile-stats"><div>Profile Views</div>Live views: <span id="live_counter"><i class="fa-solid fa-spinner"></i></span><br>Unique views: <span id="unique_counter"><i class="fa-solid fa-spinner"></i></span><br>Total views: <span id="total_counter"><i class="fa-solid fa-spinner"></i></span></div>
-		
-		<div id="cincopa_ab38b2" style="width: 29% !important;">...</div><script type="text/javascript">
-			var cpo = []; cpo["_object"] ="cincopa_ab38b2"; cpo["_fid"] = "AAOA26epjY2c";
-			var _cpmp = _cpmp || []; _cpmp.push(cpo);
-			(function() { var cp = document.createElement("script"); cp.type = "text/javascript";
-			cp.async = true; cp.src = "https://rtcdn.cincopa.com/libasync.js";
-			var c = document.getElementsByTagName("script")[0];
-			c.parentNode.insertBefore(cp, c); })(); </script>
+		<div id="cincopa_ab38b2" style="width: 29% !important;">...</div>
 	</body>
 	<script>
+		var cpo = []; cpo["_object"] ="cincopa_ab38b2"; cpo["_fid"] = "AAOA26epjY2c";
+		var _cpmp = _cpmp || []; _cpmp.push(cpo);
+		(function() { var cp = document.createElement("script"); cp.type = "text/javascript";
+		cp.async = true; cp.src = "https://rtcdn.cincopa.com/libasync.js";
+		var c = document.getElementsByTagName("script")[0];
+		c.parentNode.insertBefore(cp, c); })();
 		const cutiesArr = [
 		['FEXBot','FEXBot','🤖'], ['Ioana','Ioana','🦦'], ['Mob','Mobs','🍆'], ['Austin','Austin','🍊'], ['Rae','Piggychops','❤️'], ['Nathy','Nathy','🌺'], ['Leia','Leia','🍒'], ['Krissi','Cutey','🐱'], ['Vanessa','Jungkook','🍌'], ['Izzy','Vegito','🐪'], ['Alex','Soar','🐙'], ['Wyn','Someone','🖕🏼'], ['Emmy','Emma','🙂'], ['Kristy','Lily','🐆'],['Kelly','Sins','😴'], ['Lauren','Stunner','🤍'], ['Lemona','Lemona','🎀'], ['Kyle','Kyle','🏍️'], ['Bonnie','Loba','🐇'], ['Karl','Umbreon','👍🏻'], ['Tek','Vamp','🦔']
 		];
@@ -85,7 +84,6 @@
 		buttons.forEach(btn => {
 			btn.addEventListener("click", handleButtonClick);
 		});
-
 		function shuffle(array) {
 			let currentIndex = array.length,  randomIndex;
 			while(currentIndex != 0) {
@@ -108,26 +106,13 @@
 		//	setTimeout(cuties, 10000);
 		}
 		cuties();
-
-
 		$(document).ready(function() {
-	    $.getJSON("https://fexbots.com/jadprofilecounter", function(res) {
-	      $("#live_counter").html(res.live);
+			$.getJSON("https://fexbots.com/jadprofilecounter", function(res) {
+				$("#live_counter").html(res.live);
 				$("#unique_counter").html(res.unique);
 				$("#total_counter").html(res.total);
-	    });
-	    $(window).bind("beforeunload", function() {
-	        $.ajax({
-	          type: "POST",
-	          async: false,
-	          cache: false,
-	          url: "https://fexbots.com/jadprofilecounterlive",
-	          data: {'action' : 'leave'},
-	          success: function(result) { }
-					});
-	    });
+			});
 		});
-
 		function live_counter() {
 			var data = {'action' : 'enter'};
 			$.post('https://fexbots.com/jadprofilecounterlive',data,function(res) {
