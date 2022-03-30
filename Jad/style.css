@@ -315,7 +315,7 @@ body {
   justify-content: center;
   transition: 0.3s;
   background-color: rgba(121, 163, 224, 0.185);
-  margin-right: 25px;
+  margin: 0px 3%;
 }
 
 .card-social a:hover > i {
