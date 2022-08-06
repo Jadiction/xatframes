@@ -134,12 +134,12 @@
 		}
 		function cuties() {
 			shuffle(cutiesArr);
-			cutiesArr.unshift(['Vee','Brat','💙']);
+		//	cutiesArr.unshift(['Vee','Brat','💙']);
 			var content = '';
 			cutiesArr.forEach(function(el, index) {
 				content += '<a href="https://xat.me/'+el[1]+'" target="_blank"><div>'+((el[2])?el[2]:'❤')+'</div>'+el[0]+'</a>';
 			})
-			cutiesArr.shift(['Vee','Brat','💙']);
+		//	cutiesArr.shift(['Vee','Brat','💙']);
 			document.getElementById("cuties").innerHTML = content;
 		//	setTimeout(cuties, 10000);
 		}
