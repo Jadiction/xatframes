@@ -13,11 +13,12 @@
 			<div><div class="bunny"></div> <div class="clouds"></div></div>
 		</div>
 		<div class="box">
+			<div class="loader">Loading <div class="dot"></div> </div>
 			<span></span>
 			<span></span>
 			<span></span>
 			<span></span>
-			<div class="content">
+			<div class="content" style="display:none;">
 				<div class="row">
 					<div class="column column-start">
 						<div class="column-title"><i class="bi bi-person-fill"></i></div>
@@ -82,9 +83,7 @@
 					</div>
 					<div class="column">
 						<div class="column-title"><i class="bi bi-people-fill"></i></div>
-						<div id="list">
-							<div class="loader">Loading <div class="dot"></div> </div>
-						</div>
+						<div id="list"></div>
 					</div>
 				</div>
 			</div>
@@ -103,13 +102,11 @@ const arr = [
 function list() {
 	var content = '';
 	arr.forEach(function(el, index) {
-		content += '<li><img src="'+el[3]+'"><a href="'+el[1]+'">'+el[0]+'</a><p>'+el[2]+'</p></li>';
+		content += '<li><img ondragstart="return false" onselectstart="return false" src="'+el[3]+'"><a href="'+el[1]+'" target="_blank">'+el[0]+'</a><p>'+el[2]+'</p></li>';
 	})
 	document.getElementById("list").innerHTML = '<ol>'+content+'</ol>';
 }
 list();
-
-console.clear();
 
 $(function () {
 	var playerTrack = $("#player-track"),
@@ -297,6 +294,10 @@ $(function () {
 		});
 	}
 	initPlayer();
+});
+$(document).ready(function() {
+	$(".loader").css("display", "none");
+	$(".content").css("display", "block");
 });
 </script>
 </html>
