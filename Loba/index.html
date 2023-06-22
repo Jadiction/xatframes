@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>xat.me - Loba</title>
+	<link rel="stylesheet" href="/inc/style.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.slim.min.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="flex top">
+			<div></div>
+			<div><img src="/inc/images/avatar.gif"></div>
+			<div><div class="bunny"></div> <div class="clouds"></div></div>
+		</div>
+		<div class="box">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<div class="content">
+				<div class="row">
+					<div class="column column-start">
+						<div class="column-title"><i class="bi bi-person-fill"></i></div>
+							<table class="bio">
+								<tr>
+									<th>name: </th><td>loba</td>
+								</tr>
+								<tr>
+									<th>id: </th><td>831971</td>
+								</tr>
+								<tr>
+									<th>birthday: </th><td>mar 14</td>
+								</tr>
+								<tr>
+									<th>age: </th><td>twenty7</td>
+								</tr>
+								<tr>
+									<th>zodiac sign: </th><td>pisces</td>
+								</tr>
+								<tr>
+									<th>from: </th><td>cali</td>
+								</tr>
+							</table>
+						<div style="color: rgba(255, 209, 220, 0.6); margin-top: 50px; font-size: 15px;" class="column-title">·············································································</div>
+						<div>❝how lucky i am to have something that makes saying goodbye so hard.❞ ― winnie the pooh</div>
+							<div id="app-cover">
+								<div id="player">
+									<div id="player-track">
+										<div id="track-name"></div>
+										<div id="artist-name">Madison Beer</div>
+										<div id="track-time">
+											<div id="current-time"></div>
+											<div id="track-length"></div>
+										</div>
+										<div id="s-area">
+											<div id="ins-time"></div>
+											<div id="s-hover"></div>
+											<div id="seek-bar"></div>
+										</div>
+									</div>
+									<div id="player-content">
+										<div id="player-controls">
+											<div class="control">
+												<div class="button" id="play-previous">
+													<i class="bi bi-skip-backward-fill"></i>
+												</div>
+											</div>
+											<div class="control">
+												<div class="button" id="play-pause-button">
+													<i class="bi bi-play-fill"></i>
+												</div>
+											</div>
+											<div class="control">
+												<div class="button" id="play-next">
+													<i class="bi bi-skip-forward-fill"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+					<div class="column">
+						<div class="column-title"><i class="bi bi-people-fill"></i></div>
+						<div id="list">
+							<div class="loader">Loading <div class="dot"></div> </div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+const arr = [
+	['lem','https://xat.me/lemona','my beautiful wife.','/inc/images/heart-3.png'],
+	['leia','https://xat.me/royalty','the cutest gal on xat.','/inc/images/heart-2.png'],
+	['jad','https://xat.me/jadiction','my bff.','/inc/images/heart-1.png'],
+	['annie','https://xat.me/dork','my gorgeous girlfriend.','/inc/images/heart-4.png'],
+	['rie','https://xat.me/marie','hottest girl EVER.','/inc/images/heart-5.png'],
+	['karls','https://xat.me/umbreon','GRRRRRRRRRR (it).','/inc/images/heart-6.png']
+];
+function list() {
+	var content = '';
+	arr.forEach(function(el, index) {
+		content += '<li><img src="'+el[3]+'"><a href="'+el[1]+'">'+el[0]+'</a><p>'+el[2]+'</p></li>';
+	})
+	document.getElementById("list").innerHTML = '<ol>'+content+'</ol>';
+}
+list();
+
+console.clear();
+
+$(function () {
+	var playerTrack = $("#player-track"),
+		trackName = $("#track-name"),
+		sArea = $("#s-area"),
+		seekBar = $("#seek-bar"),
+		trackTime = $("#track-time"),
+		insTime = $("#ins-time"),
+		sHover = $("#s-hover"),
+		playPauseButton = $("#play-pause-button"),
+		i = playPauseButton.find("i"),
+		tProgress = $("#current-time"),
+		tTime = $("#track-length"),
+		seekT,
+		seekLoc,
+		seekBarPos,
+		cM,
+		ctMinutes,
+		ctSeconds,
+		curMinutes,
+		curSeconds,
+		durMinutes,
+		durSeconds,
+		playProgress,
+		bTime,
+		nTime = 0,
+		buffInterval = null,
+		tFlag = false,
+		trackNames = [
+			"Good in Goodbye",
+			"BOYSHIT",
+			"Carried Away",
+			"Home To Another One",
+			"Reckless",
+			"Selfish"
+		],
+		trackUrl = [
+			"/inc/music/Good in Goodbye.mp3",
+			"/inc/music/BOYSHIT.mp3",
+			"/inc/music/Carried Away.mp3",
+			"/inc/music/Home To Another One.mp3",
+			"/inc/music/Reckless.mp3",
+			"/inc/music/Selfish.mp3",
+		],
+		playPreviousTrackButton = $("#play-previous"),
+		playNextTrackButton = $("#play-next"),
+		currIndex = -1;
+
+	function playPause() {
+		setTimeout(function () {
+			if (audio.paused) {
+				playerTrack.addClass("active");
+				checkBuffering();
+				i.attr("class", "bi bi-pause-fill");
+				audio.play();
+			} else {
+				playerTrack.removeClass("active");
+				clearInterval(buffInterval);
+				i.attr("class", "bi bi-play-fill");
+				audio.pause();
+			}
+		}, 300);
+	}
+
+	function showHover(event) {
+		seekBarPos = sArea.offset();
+		seekT = event.clientX - seekBarPos.left;
+		seekLoc = audio.duration * (seekT / sArea.outerWidth());
+		sHover.width(seekT);
+		cM = seekLoc / 60;
+		ctMinutes = Math.floor(cM);
+		ctSeconds = Math.floor(seekLoc - ctMinutes * 60);
+		if (ctMinutes < 0 || ctSeconds < 0) return;
+		if (ctMinutes < 0 || ctSeconds < 0) return;
+		if (ctMinutes < 10) ctMinutes = "0" + ctMinutes;
+		if (ctSeconds < 10) ctSeconds = "0" + ctSeconds;
+		if (isNaN(ctMinutes) || isNaN(ctSeconds)) insTime.text("--:--");
+		else insTime.text(ctMinutes + ":" + ctSeconds);
+		insTime.css({ left: seekT, "margin-left": "-21px" }).fadeIn(0);
+	}
+
+	function hideHover() {
+		sHover.width(0);
+		insTime.text("00:00").css({ left: "0px", "margin-left": "0px" }).fadeOut(0);
+	}
+
+	function playFromClickedPos() {
+		audio.currentTime = seekLoc;
+		seekBar.width(seekT);
+		hideHover();
+	}
+
+	function updateCurrTime() {
+		nTime = new Date();
+		nTime = nTime.getTime();
+		if (!tFlag) {
+			tFlag = true;
+			trackTime.addClass("active");
+		}
+		curMinutes = Math.floor(audio.currentTime / 60);
+		curSeconds = Math.floor(audio.currentTime - curMinutes * 60);
+		durMinutes = Math.floor(audio.duration / 60);
+		durSeconds = Math.floor(audio.duration - durMinutes * 60);
+		playProgress = (audio.currentTime / audio.duration) * 100;
+		if (curMinutes < 10) curMinutes = "0" + curMinutes;
+		if (curSeconds < 10) curSeconds = "0" + curSeconds;
+		if (durMinutes < 10) durMinutes = "0" + durMinutes;
+		if (durSeconds < 10) durSeconds = "0" + durSeconds;
+		if (isNaN(curMinutes) || isNaN(curSeconds)) tProgress.text("00:00");
+		else tProgress.text(curMinutes + ":" + curSeconds);
+		if (isNaN(durMinutes) || isNaN(durSeconds)) tTime.text("00:00");
+		else tTime.text(durMinutes + ":" + durSeconds);
+
+		if (
+			isNaN(curMinutes) ||
+			isNaN(curSeconds) ||
+			isNaN(durMinutes) ||
+			isNaN(durSeconds)
+		)
+			trackTime.removeClass("active");
+		else trackTime.addClass("active");
+		seekBar.width(playProgress + "%");
+		if (playProgress == 100) {
+			i.attr("class", "bi bi-play-fill");
+			seekBar.width(0);
+			tProgress.text("00:00");
+			clearInterval(buffInterval);
+		}
+	}
+
+	function checkBuffering() {
+		clearInterval(buffInterval);
+		buffInterval = setInterval(function () {
+			bTime = new Date();
+			bTime = bTime.getTime();
+		}, 100);
+	}
+
+	function selectTrack(flag) {
+		if (flag == 0 || flag == 1) ++currIndex;
+		else --currIndex;
+		if (currIndex > -1 && currIndex < trackNames.length) {
+			if (flag == 0) i.attr("class", "bi bi-play-fill");
+			else {
+				i.attr("class", "bi bi-pause-fill");
+			}
+			seekBar.width(0);
+			trackTime.removeClass("active");
+			tProgress.text("00:00");
+			tTime.text("00:00");
+			currTrackName = trackNames[currIndex];
+			audio.src = trackUrl[currIndex];
+			nTime = 0;
+			bTime = new Date();
+			bTime = bTime.getTime();
+			if (flag != 0) {
+				audio.play();
+				playerTrack.addClass("active");
+				clearInterval(buffInterval);
+				checkBuffering();
+			}
+			trackName.text(currTrackName);
+		} else {
+			if (flag == 0 || flag == 1) --currIndex;
+			else ++currIndex;
+		}
+	}
+
+	function initPlayer() {
+		audio = new Audio();
+		selectTrack(0);
+		audio.loop = false;
+		playPauseButton.on("click", playPause);
+		sArea.mousemove(function (event) {
+			showHover(event);
+		});
+		sArea.mouseout(hideHover);
+		sArea.on("click", playFromClickedPos);
+		$(audio).on("timeupdate", updateCurrTime);
+		playPreviousTrackButton.on("click", function () {
+			selectTrack(-1);
+		});
+		playNextTrackButton.on("click", function () {
+			selectTrack(1);
+		});
+	}
+	initPlayer();
+});
+
+</script>
+</html>
